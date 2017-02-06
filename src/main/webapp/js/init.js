@@ -12,26 +12,32 @@
 
     as.config(function ($routeProvider, $httpProvider) {
         //configure the rounting of ng-view
-        $routeProvider
-                .when('/',
-                        {templateUrl: 'partials/home.html',
-                            publicAccess: true})
-                .when('/home',
-                        {templateUrl: 'partials/home.html',
-                            publicAccess: true})
+        $routeProvider        		
+                            
                 .when('/login',
-                        {templateUrl: 'partials/login.html',
+                        {   templateUrl: 'partials/login.html',
+                			controller: 'LoginController',
                             publicAccess: true})
-                .when('/posts',
+                            
+                 .when('/moradores/agendamento',
+                        {controller: 'MoradorController',
+                         	templateUrl: 'partials/morador/agendamento.html'})           
+                
+                 .when('/posts',
                         {controller: 'PostsController',
-                            templateUrl: 'partials/posts/home.html'})
+                         	templateUrl: 'partials/posts/home.html'})
+                            
                 .when('/posts/new',
                         {controller: 'NewPostController',
                             templateUrl: 'partials/posts/new.html'})
+                            
                 .when('/posts/:id',
                         {controller: 'DetailsController',
-                            templateUrl: 'partials/posts/details.html'});
-
+                            templateUrl: 'partials/posts/details.html'})
+                            
+                .otherwise({
+                		redirectTo: '/login'
+                	});
 
         //configure $http to catch message responses and show them
         $httpProvider.interceptors.push(function ($q) {
@@ -97,7 +103,6 @@
 
             };
         });
-
 
         httpHeaders = $httpProvider.defaults.headers;
     });

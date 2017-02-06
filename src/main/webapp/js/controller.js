@@ -3,6 +3,7 @@
 
     as.controller('MainController', function ($q, $scope, $rootScope, $http, i18n, $location) {
         var load = function () {
+        	console.log("Inicializando Maincontroller");
         };
 
         load();
@@ -28,7 +29,60 @@
             $location.url('/login');
         };
 
-    });
+    });      
+    
+    as.controller('MenuPrincipal', function($rootScope, $scope, $http) {
+    	
+		$rootScope.menuRaizSelecionado = null;
+		$rootScope.menus = [];
+		$scope.submenus = [];
+		
+		$http({
+			method : 'GET',
+			url: 'menuPrincipal.json',
+			transformResponse: function(data, headers, status) {
+				data = data.replace(/\\\\u/gi, "\\u");
+				return eval("(" + data + ")");
+			}
+		})
+		.success(function(data, status, headers, config) {
+			for(var i = 0; i < data.length; ++i) { $rootScope.menus.push(data[i]); }
+		});
+		
+		$http({ method : 'GET', url: 'subMenus.json' })
+		.success(function(data, status, headers, config) {
+			for(var i = 0; i < data.length; ++i) { $scope.submenus.push(data[i]); }
+		});
+		
+		$scope.menuItemMouseOver = function(item) {
+			console.log('item: ',item);
+			$('#submenu_' + item.id).removeClass('invisivel');
+			$('#submenu_' + item.id).addClass('visivel');
+		};
+	
+		$scope.menuItemMouseOut = function(item) {
+			$('#submenu_' + item.id).removeClass('visivel');
+			$('#submenu_' + item.id).addClass('invisivel');
+		};
+		
+		$scope.submenuItemMouseOver = function(item) {
+			var _self = $('#' + item.id);
+			var _target = '#' + new String(item.id).substr(8, 6);
+			$(_self).removeClass('invisivel');
+			$(_self).addClass('visivel');
+			$(_target).css('background-color','rgb(68, 100, 128)');
+		};
+		
+		$scope.submenuItemMouseOut = function(item) {
+			var _self = $('#' + item.id);
+			var _target = '#' + new String(item.id).substr(8, 6);
+			$(_self).removeClass('visivel');
+			$(_self).addClass('invisivel');
+			$( _target ).css('background-color','');
+		};
+		
+	});    
+    
 
     as.controller('LoginController', function ($scope, $rootScope, $http, base64, $location) {
 
@@ -70,11 +124,11 @@
                         $http.get(actionUrl + $routeParams.id),
                         $http.get(actionUrl + $routeParams.id + '/comments')
                     ])
-                            .then(function (result) {
-                                $scope.post = result[0].data;
-                                $scope.comments = result[1].data.content;
-                                $scope.totalItems = result[1].data.totalElements;
-                            });
+                        .then(function (result) {
+                            $scope.post = result[0].data;
+                            $scope.comments = result[1].data.content;
+                            $scope.totalItems = result[1].data.totalElements;
+                        });
                 };
 
         load();

@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.hantsylabs.restexample.springmvc"})
 public class DataJpaConfig {
-
-
+	
 }
