@@ -346,7 +346,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
+            <version>4.5.3</version>
         </dependency>
     
         <!--webjars static resources-->
@@ -748,7 +748,7 @@
             <properties>
                 <jdbc.url><![CDATA[jdbc:mysql://localhost:3306/condominio]]></jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password></jdbc.password>
+                <jdbc.password/>
 
                 <log4j.level>DEBUG</log4j.level>
 
@@ -781,7 +781,7 @@
                 <jdbc.url><![CDATA[jdbc:mysql://localhost:3306/app]]>
                 </jdbc.url>
                 <jdbc.username>root</jdbc.username>
-                <jdbc.password></jdbc.password>
+                <jdbc.password/>
 
                 <log4j.level>INFO</log4j.level>
 
